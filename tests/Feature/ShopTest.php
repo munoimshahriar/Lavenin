@@ -264,7 +264,9 @@ class ShopTest extends TestCase
     public function test_customers_cannot_open_admin(): void
     {
         $customer = User::create(['name' => 'Cust', 'email' => 'c@example.com', 'password' => 'secret123']);
-        $this->actingAs($customer)->get('/manage')->assertForbidden();
+        // A logged-in customer is logged out and sent to the admin login form (no dead-end 403).
+        $this->actingAs($customer)->get('/manage')->assertRedirect('/manage/login');
+        $this->assertGuest();
     }
 
     public function test_staff_can_only_manage_orders(): void
