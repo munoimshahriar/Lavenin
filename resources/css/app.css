@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --cream: #FAF7F2;
+    --teal: #76A9AD;
+    --teal-deep: #4F8488;
+    --slate: #30363F;
+    --coral: #FF5722;
+    --mint: #E3EFEF;
+}
+
+[x-cloak] { display: none !important; }
+
+@layer base {
+    body {
+        @apply bg-cream text-slate font-sans antialiased;
+    }
+    html[lang='bn'] body {
+        font-family: 'Hind Siliguri', 'Nunito', ui-sans-serif, system-ui, sans-serif;
+    }
+    h1, h2, h3, h4 {
+        @apply font-display text-slate;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-semibold transition focus:outline-none focus-visible:ring-4 focus-visible:ring-teal/40;
+    }
+    .btn-primary {
+        @apply btn bg-teal text-white hover:bg-teal-deep;
+    }
+    .btn-cta {
+        @apply btn bg-coral text-white hover:brightness-95;
+    }
+    .card {
+        @apply rounded-card bg-white shadow-soft;
+    }
+}
