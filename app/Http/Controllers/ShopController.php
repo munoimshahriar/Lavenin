@@ -37,7 +37,7 @@ class ShopController extends Controller
 
         if ($q = $validated['q'] ?? null) {
             // Search the raw JSON text (both languages) and SKU. Bangla is stored unescaped (see AppServiceProvider).
-            $query->where(fn ($w) => $w->where('name', 'like', '%'.addcslashes($q, '%_\\').'%')->orWhere('sku', $q));
+            $query->where(fn ($w) => $w->searchName($q)->orWhere('sku', $q));
         }
 
         match ($validated['sort'] ?? 'new') {

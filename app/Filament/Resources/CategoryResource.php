@@ -50,7 +50,7 @@ class CategoryResource extends Resource
             ->defaultSort('sort')
             ->reorderable('sort')
             ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable(query: fn ($query, $search) => $query->where('name', 'like', "%{$search}%")),
+                Tables\Columns\TextColumn::make('name')->searchable(query: fn ($query, $search) => $query->searchName($search)),
                 Tables\Columns\TextColumn::make('slug')->color('gray'),
                 Tables\Columns\TextColumn::make('products_count')->counts('products')->label('Products'),
                 Tables\Columns\IconColumn::make('is_active')->boolean()->label('Visible'),

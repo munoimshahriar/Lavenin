@@ -112,7 +112,7 @@ class ProductResource extends Resource
             ->modifyQueryUsing(fn (Builder $query) => $query->with(['firstImage', 'category']))
             ->columns([
                 Tables\Columns\ImageColumn::make('firstImage.thumb_path')->disk('public')->label('')->square(),
-                Tables\Columns\TextColumn::make('name')->searchable(query: fn ($query, $search) => $query->where('name', 'like', "%{$search}%")->orWhere('sku', 'like', "%{$search}%"))->limit(40),
+                Tables\Columns\TextColumn::make('name')->searchable(query: fn ($query, $search) => $query->where(fn ($w) => $w->searchName($search)->orWhere('sku', 'like', "%{$search}%")))->limit(40),
                 Tables\Columns\TextColumn::make('category.name')->label('Category'),
                 Tables\Columns\TextColumn::make('price')->formatStateUsing(fn ($state) => '৳'.number_format($state))->sortable(),
                 Tables\Columns\TextColumn::make('stock')->sortable()->badge()

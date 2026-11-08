@@ -11,11 +11,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Concerns\SearchesTranslatedName;
 use Spatie\Translatable\HasTranslations;
 
 class Product extends Model
 {
-    use HasFactory, HasTranslations;
+    use HasFactory, HasTranslations, SearchesTranslatedName;
 
     public array $translatable = ['name', 'description'];
 

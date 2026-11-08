@@ -15,6 +15,16 @@ class AdminPagesTest extends TestCase
 {
     use RefreshDatabase;
 
+    /** Regression: 2FA/profile actions returned "419 Page Expired" because these weren't registered on /livewire/update. */
+    public function test_profile_livewire_components_are_registered_outside_the_panel(): void
+    {
+        $registry = app(\Livewire\Mechanisms\ComponentRegistry::class);
+
+        foreach (['two_factor_authentication', 'personal_info', 'update_password'] as $name) {
+            $this->assertNotEmpty($registry->getClass($name));
+        }
+    }
+
     public function test_owner_must_set_up_2fa_then_can_open_every_admin_page(): void
     {
         Storage::fake('public');

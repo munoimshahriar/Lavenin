@@ -53,6 +53,18 @@ class ShopTest extends TestCase
         $this->get('/contact')->assertOk();
     }
 
+    public function test_search_is_case_insensitive_and_robots_blocks_admin(): void
+    {
+        $this->product(['name' => ['en' => 'Toy Truck', 'bn' => 'টয় ট্রাক']]);
+
+        $this->get('/shop?q=truck')->assertSee('টয় ট্রাক');
+        $this->get('/shop?q=TRUCK')->assertSee('টয় ট্রাক');
+        $this->get('/shop?q=ট্রাক')->assertSee('টয় ট্রাক');
+        $this->get('/shop?q=zebra')->assertDontSee('টয় ট্রাক');
+
+        $this->get('/robots.txt')->assertOk()->assertSee('Disallow: /manage');
+    }
+
     public function test_slug_is_generated_from_english_name(): void
     {
         $this->assertSame('bunny', $this->product()->slug);
