@@ -110,3 +110,24 @@ Never run `migrate:fresh` or `db:wipe` on the server — it deletes all orders.
 - Owner account has 2FA enabled (the panel forces it on first login).
 - Admin is at `/manage` (not `/admin`); login is rate-limited.
 - If you put Cloudflare in front of the site, add its IP ranges to `trustProxies` in `bootstrap/app.php` so rate limits see real visitor IPs.
+
+---
+
+## Live setup (done 2026-11-09)
+
+- SSH details are in hPanel → Advanced → SSH Access. Locally the key is `~/.ssh/lavenin_hostinger` with a host alias `lavenin` in `~/.ssh/config` (not in this repo).
+- App in `~/lavenin`; `~/domains/lavenin.com/public_html` is a **symlink** to `~/lavenin/public` (Hostinger's original folder was kept as `public_html.hostinger-default.*`).
+- Database name, user and password live only in the server's `.env` (see hPanel → Databases).
+- Owner login: the email in `OWNER_EMAIL`; 2FA must be set up on first login.
+
+### Hostinger quirks
+- `composer install` must use `--no-scripts` (Composer's `proc_open` is disabled) — then run `php artisan package:discover`.
+- `php artisan storage:link` fails (`exec()` disabled) — create it with `ln -sfn ~/lavenin/storage/app/public ~/lavenin/public/storage`.
+- No scheduled tasks are used yet, so no cron job is needed.
+
+### Updating the live site
+Commit your changes, then from the project root in Git Bash:
+
+```bash
+bash scripts/deploy-hostinger.sh
+```
