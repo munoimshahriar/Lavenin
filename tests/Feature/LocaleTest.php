@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LocaleTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_home_defaults_to_bangla(): void
     {
         $this->get('/')

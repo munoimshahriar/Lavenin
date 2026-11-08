@@ -3,7 +3,7 @@
 Each phase ends with: tests green, `git commit`, one-paragraph summary. Owner reviews in browser before the next phase.
 
 ## Phase 0 — Scaffold (small)
-- `composer create-project laravel/laravel .` (Laravel 11), Tailwind + Alpine via Vite, MySQL `.env.example`.
+- `composer create-project laravel/laravel .` (Laravel 12), Tailwind + Alpine via Vite, MySQL `.env.example`.
 - Install Filament v3 (panel path `/manage`), spatie permission + translatable, Intervention Image.
 - Locale middleware (bn/en toggle), base layout with palette tokens + fonts from CLAUDE.md.
 - `README.md` with local setup (`composer install`, `npm run build`, `php artisan migrate --seed`).

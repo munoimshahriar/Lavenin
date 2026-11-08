@@ -8,7 +8,7 @@ Read this file fully before any work. Follow `docs/PLAN.md` phase by phase; do n
 |---|---|
 | Market | Bangladesh only. Currency BDT (৳). |
 | Hosting target | Hostinger **shared** hosting → PHP 8.2+ / MySQL. No Node runtime in production (Node only at build time for assets). |
-| Stack | Laravel 11, Blade + Tailwind CSS + Alpine.js storefront, **Filament v3** for admin, MySQL, `spatie/laravel-permission` for roles. |
+| Stack | Laravel 12, Blade + Tailwind CSS + Alpine.js storefront, **Filament v3** for admin, MySQL, `spatie/laravel-permission` for roles. |
 | Languages | Bangla + English toggle (Laravel `lang/bn`, `lang/en`; cookie/session-based locale, default **bn**). Product name/description stored in both languages (JSON columns via `spatie/laravel-translatable`). |
 | Payments | COD, or manual **bKash / Nagad** "Send Money": customer sees the merchant number, enters sender number + TrxID at checkout; admin verifies and marks paid. No gateway at launch (SSLCommerz later — keep a `PaymentMethod` abstraction). |
 | Shipping | See rules below. |

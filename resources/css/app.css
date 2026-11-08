@@ -38,4 +38,16 @@
     .card {
         @apply rounded-card bg-white shadow-soft;
     }
+    .input {
+        @apply block w-full rounded-2xl border border-teal/30 bg-white px-4 py-3 text-slate placeholder:text-slate/40 focus:border-teal focus:outline-none focus:ring-2 focus:ring-teal/30;
+    }
+    .label {
+        @apply mb-1 block text-sm font-semibold;
+    }
+    .error {
+        @apply mt-1 text-sm text-coral;
+    }
+    .btn-ghost {
+        @apply btn border border-teal text-teal-deep hover:bg-mint;
+    }
 }
