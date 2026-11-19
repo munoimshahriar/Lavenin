@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\OrderSlipController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\FeedController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\ShopController;
@@ -20,6 +21,7 @@ Route::get('/lang/{locale}', LocaleController::class)->whereIn('locale', ['bn', 
 
 Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
 Route::get('/robots.txt', [SeoController::class, 'robots']);
+Route::get('/feeds/meta.xml', [FeedController::class, 'meta'])->middleware('throttle:30,1')->name('feeds.meta');
 
 // Cart
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');

@@ -28,6 +28,7 @@ class Setting extends Model
         'whatsapp_number' => '',
         'facebook_url' => '',
         'fb_pixel_id' => '',
+        'fb_domain_verification' => '',
         'ga4_id' => '',
     ];
 

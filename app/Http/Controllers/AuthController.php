@@ -77,6 +77,7 @@ class AuthController extends Controller
         $user = User::create($data);
 
         Auth::login($user);
+        \App\Support\MetaPixel::flash('CompleteRegistration', ['status' => true]);
         $request->session()->regenerate();
         $this->cart->mergeGuestCartInto($user);
 

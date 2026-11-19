@@ -6,6 +6,7 @@ use App\Enums\PaymentMethod;
 use App\Http\Requests\CheckoutRequest;
 use App\Models\Order;
 use App\Services\CheckoutService;
+use App\Support\MetaPixel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,7 +26,13 @@ class CheckoutController extends Controller
 
         $user = $request->user();
 
+        // Not on reloads after a validation error, so one checkout counts once.
+        $pixelEvents = $request->session()->has('errors') ? [] : [
+            MetaPixel::event('InitiateCheckout', MetaPixel::cartParams($quote['items'], $quote['subtotal'])),
+        ];
+
         return view('checkout', [
+            'pixelEvents' => $pixelEvents,
             'quote' => $quote,
             'methods' => PaymentMethod::available(),
             'districts' => config('bd.districts'),
@@ -63,6 +70,7 @@ class CheckoutController extends Controller
 
         // Let this browser view its confirmation page without logging in.
         $request->session()->push('placed_orders', $order->id);
+        MetaPixel::flash('Purchase', MetaPixel::orderParams($order));
 
         return redirect()->route('orders.show', $order);
     }

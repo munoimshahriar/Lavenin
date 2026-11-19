@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Support\MetaPixel;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -47,6 +48,7 @@ class ShopController extends Controller
         };
 
         return view('shop.index', [
+            'pixelEvents' => filled($validated['q'] ?? null) ? [MetaPixel::event('Search', ['search_string' => $validated['q']])] : [],
             'products' => $query->paginate(12)->withQueryString(),
             'category' => $category,
             'categories' => Category::active()->orderBy('sort')->get(),
@@ -62,6 +64,7 @@ class ShopController extends Controller
         $reviews = $product->reviews()->where('is_approved', true)->with('user:id,name')->latest()->get();
 
         return view('shop.product', [
+            'pixelEvents' => [MetaPixel::event('ViewContent', MetaPixel::productParams($product))],
             'product' => $product,
             'reviews' => $reviews,
             'avgRating' => $reviews->avg('rating'),

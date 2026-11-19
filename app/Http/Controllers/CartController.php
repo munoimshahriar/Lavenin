@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Services\CartService;
+use App\Support\MetaPixel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -24,7 +25,9 @@ class CartController extends Controller
         abort_unless($product->is_active && $product->inStock(), 404);
         $data = $request->validate(['quantity' => ['nullable', 'integer', 'min:1', 'max:'.CartService::MAX_QTY]]);
 
-        $this->cart->add($product, (int) ($data['quantity'] ?? 1));
+        $qty = (int) ($data['quantity'] ?? 1);
+        $this->cart->add($product, $qty);
+        MetaPixel::flash('AddToCart', MetaPixel::productParams($product, $qty));
 
         if ($request->boolean('buy_now')) {
             return redirect()->route('checkout.show');

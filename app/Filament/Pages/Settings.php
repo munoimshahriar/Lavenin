@@ -55,10 +55,19 @@ class Settings extends Page implements HasForms
                 Forms\Components\TextInput::make('whatsapp_number')->label('WhatsApp number')->helperText('With country code, e.g. 8801XXXXXXXXX')->regex('/^\d{10,15}$/'),
                 Forms\Components\TextInput::make('facebook_url')->label('Facebook page URL')->url()->maxLength(255),
             ])->columns(3),
-            Forms\Components\Section::make('Tracking (optional)')->schema([
-                Forms\Components\TextInput::make('fb_pixel_id')->label('Facebook Pixel ID')->regex('/^\d{5,20}$/'),
+            Forms\Components\Section::make('Meta (Facebook) ads')
+                ->description('Product catalog feed for Commerce Manager: '.url('/feeds/meta.xml'))
+                ->schema([
+                    Forms\Components\TextInput::make('fb_pixel_id')->label('Meta Pixel ID')
+                        ->helperText('Events Manager → your dataset/pixel → the number under its name.')
+                        ->regex('/^\d{5,20}$/'),
+                    Forms\Components\TextInput::make('fb_domain_verification')->label('Domain verification code')
+                        ->helperText('Business settings → Brand safety → Domains → lavenin.com → "Meta-tag": paste only the content="…" value.')
+                        ->regex('/^[a-z0-9]{10,64}$/'),
+                ])->columns(2),
+            Forms\Components\Section::make('Google (optional)')->schema([
                 Forms\Components\TextInput::make('ga4_id')->label('GA4 Measurement ID')->placeholder('G-XXXXXXX')->regex('/^G-[A-Z0-9]{4,15}$/'),
-            ])->columns(2),
+            ]),
         ]);
     }
 
